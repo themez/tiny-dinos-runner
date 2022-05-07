@@ -375,10 +375,9 @@
             this.distanceMeter = new DistanceMeter(this.canvas,
                 this.spriteDef.TEXT_SPRITE, this.dimensions.WIDTH);
 
+            this.outerContainerEl.appendChild(this.containerEl);
             // Draw t-rex
             this.tRex = new Trex(this.canvas, this.spriteDef.TREX);
-
-            this.outerContainerEl.appendChild(this.containerEl);
 
             if (IS_MOBILE) {
                 this.createTouchController();
@@ -389,6 +388,11 @@
 
             window.addEventListener(Runner.events.RESIZE,
                 this.debounceResize.bind(this));
+        },
+
+        reload: function () {
+            this.clearCanvas()
+            this.adjustDimensions()
         },
 
         /**
@@ -467,7 +471,7 @@
                     'from { width:' + Trex.config.WIDTH + 'px }' +
                     'to { width: ' + this.dimensions.WIDTH + 'px }' +
                     '}';
-                
+
                 // create a style sheet to put the keyframe rule in 
                 // and then place the style sheet in the html head    
                 var sheet = document.createElement('style');
@@ -1711,10 +1715,17 @@
                     this.xPos++;
                 }
                 // Standing / running
-                this.canvasCtx.drawImage(Runner.imageSprite, sourceX, sourceY,
-                    sourceWidth, sourceHeight,
-                    this.xPos, this.yPos,
-                    this.config.WIDTH, this.config.HEIGHT);
+                if (typeof window.customTrexSprite !== 'undefined') {
+                    this.canvasCtx.drawImage(window.customTrexSprite, 0, 0,
+                        1600, 1600,
+                        this.xPos, this.yPos,
+                        this.config.WIDTH, this.config.HEIGHT);
+                } else {
+                    this.canvasCtx.drawImage(Runner.imageSprite, sourceX, sourceY,
+                        sourceWidth, sourceHeight,
+                        this.xPos, this.yPos,
+                        this.config.WIDTH, this.config.HEIGHT);
+                }
             }
         },
 
@@ -2709,7 +2720,7 @@
 
 
 function onDocumentLoad() {
-    new Runner('.interstitial-wrapper');
+    window.runner = new Runner('.interstitial-wrapper');
 }
 
 document.addEventListener('DOMContentLoaded', onDocumentLoad);
