@@ -50,13 +50,17 @@
 
 <script>
     const getDinoImage = (tokenId) => `https://github.com/rawrdao/tinydinosassets/raw/main/images/dinos/1600x1600/transparent/${tokenId}.png`
-    document.onkeydown = function(evt) {
+    function hideMessageBox(evt) {
+        var box = document.getElementById("messageBox");
+        box.style.visibility="hidden";
+    }
+    document.onkeydown = function() {
         evt = evt || window.event;
         if (evt.keyCode == 32) {
-            var box = document.getElementById("messageBox");
-            box.style.visibility="hidden";
+            hideMessageBox()
         }
     }
+    document.ontouchstart = hideMessageBox
     document.getElementById('random-token').onclick = function(e){        
         document.getElementById('token-id').value = Math.round(Math.random()*9999)
         document.getElementById('select-token').click()
