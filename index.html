@@ -31,12 +31,11 @@
             </template>
         </div>
     </div>
-    <div class="token-id-input" style="width: 100%;">
+    <div class="token-id-input">
         <div></div>
-        <div style="margin: auto; width:30%;">
+        <div style="margin: auto; width:180px;">
             <h4>Choose your dino hero</h4>
             <div style="border: solid; padding: 15px 10px;">
-
                 <label for="token-id">Tiny Dinos No:</label>
                 <input id="token-id" placeholder="your tokenId"/>
                 <div style="margin-top: 10px;">
@@ -58,13 +57,11 @@
             box.style.visibility="hidden";
         }
     }
-    document.getElementById('random-token').onclick = function(){
-        console.log('random dino')
+    document.getElementById('random-token').onclick = function(e){        
         document.getElementById('token-id').value = Math.round(Math.random()*9999)
         document.getElementById('select-token').click()
     }
     document.getElementById('select-token').onclick = function(){
-        console.log('select dino')
         var tokenId = parseInt(document.getElementById('token-id').value)
         if(isNaN(tokenId) || tokenId<0 || tokenId>9999){
             alert('Please enter a number between 0 and 9999')
